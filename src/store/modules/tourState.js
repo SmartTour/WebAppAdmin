@@ -1,41 +1,10 @@
+import ApiService from "../../services/ApiService";
+import UserExperienceHelper from "../helpers/UserExperienceHelper.js";
 export const namespaced = true;
 export const state = {
-  baseList: [
-    {
-      id: 1,
-      title: "BASE TOUR #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      contents: [],
-      detectionContents: []
-    },
-    {
-      id: 2,
-      title: "BASE TOUR #2",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      contents: [],
-      detectionContents: []
-    }
-  ],
-  liveList: [
-    {
-      id: 1,
-      title: "LIVE TOUR #1",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      contents: [],
-      detectionContents: []
-    },
-    {
-      id: 2,
-      title: "LIVE TOUR #2",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      contents: [],
-      detectionContents: []
-    }
-  ]
+  baseList: [],
+  liveList: [],
+  idItem: 1
 };
 export const mutations = {
   SET_BASE_LIST(state, baseList) {
@@ -43,26 +12,81 @@ export const mutations = {
   },
   SET_LIVE_LIST(state, liveList) {
     state.liveList = liveList;
+  },
+  RELOAD_TOUR() {
+    location.reload();
+    //state.baseTour.push(baseTour);
   }
 };
 export const actions = {
-  fetchList({ commit }) {
-    let baseList;
-    let liveList;
-    //call to service
-    if (baseList != null) {
-      commit("SET_BASE_LIST", baseList);
-    }
-    if (liveList != null) {
-      commit("SET_LIVE_LIST", liveList);
-    }
+  fetchBaseList({ commit }) {
+    UserExperienceHelper.startLoading();
+    ApiService.getBaseTour()
+      .then(({ data }) => {
+        console.log("BaseTour caricati " + data);
+        commit("SET_BASE_LIST", data);
+      })
+      .catch(err => {
+        UserExperienceHelper.negativeNotify(err, "baseTour");
+      })
+      .then(() => {
+        UserExperienceHelper.stopLoading();
+      });
+  },
+  addBaseTour({ commit }, baseTour) {
+    UserExperienceHelper.startLoading();
+    ApiService.addBaseTour(baseTour)
+      .then(({ data }) => {
+        console.log("baseTour Aggiunta " + data);
+        commit("RELOAD_TOUR");
+      })
+      .catch(err => {
+        UserExperienceHelper.negativeNotify(err, "baseTour");
+      })
+      .then(() => {
+        UserExperienceHelper.stopLoading();
+      });
+  },
+  updateBaseTour({ commit }, baseTour) {
+    UserExperienceHelper.startLoading();
+    ApiService.modifyBaseTour(baseTour)
+      .then(({ data }) => {
+        console.log("baseTour modificata " + data);
+        UserExperienceHelper.positiveNotify("success ");
+        commit("RELOAD_TOUR");
+      })
+      .catch(err => {
+        UserExperienceHelper.negativeNotify(err, "baseTour");
+      })
+      .then(() => {
+        UserExperienceHelper.stopLoading();
+      });
+  },
+  deleteBaseTour({ commit }, idBaseTour) {
+    UserExperienceHelper.startLoading();
+    ApiService.deleteBaseTourById(idBaseTour)
+      .then(({ data }) => {
+        console.log("baseTour modificata " + data);
+        UserExperienceHelper.positiveNotify("success ");
+        commit("RELOAD_TOUR");
+      })
+      .catch(err => {
+        UserExperienceHelper.negativeNotify(err, "baseTour");
+      })
+      .then(() => {
+        UserExperienceHelper.stopLoading();
+      });
   }
 };
 export const getters = {
   getBaseById: state => id => {
-    return state.Baselist.find(item => item.id === id);
+    console.log("almeno entro nell funzione");
+    return state.baseList.find(item => item.id == id);
+  },
+  getBaseTourById: (state, getters, id) => {
+    return getters.getBaseById(id);
   },
   getLiveById: state => id => {
-    return state.Livelist.find(item => item.id === id);
+    return state.liveList.find(item => item.id == id);
   }
 };

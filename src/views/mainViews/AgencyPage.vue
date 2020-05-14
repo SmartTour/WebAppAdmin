@@ -1,44 +1,29 @@
 <template>
   <div>
-    <CardItem
+    <h1>Questa è la dashboard dell'azienda</h1>
+    <p>
+      dati <br />
+      {{ agency }}
+    </p>
+    <!-- <CardItem
       :manageAction="goToSmartTour"
       :title="smartTour.title"
+      :nameAgency="agency.name"
       :desc="smartTour.description"
-    />
+    /> -->
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import CardItem from "@/components/CardItem.vue";
-import ApiService from "@/services/ApiService.js";
 
 export default {
-  components: {
-    CardItem
-  },
-  beforeCreate() {
-    this.$store.dispatch("layoutState/updateType", "default");
-  },
   created() {
-    ApiService.getAgencies()
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log("the error was " + error.message);
-      });
+    this.$store.dispatch("layoutState/updateType", "default");
+    if (this.agency == null) this.$store.dispatch("userState/fetchAgency");
   },
+
   computed: {
-    ...mapState(["smartTour"]),
-    ...mapState("userState", ["user"])
-  },
-  methods: {
-    goToSmartTour() {
-      this.$router.push({
-        name: "SmartTourPresentation",
-        params: { id: this.smartTour.id }
-      });
-    }
+    ...mapState("userState", ["user", "agency"])
   }
 };
 </script>

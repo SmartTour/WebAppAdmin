@@ -39,7 +39,15 @@ import {
   QItem,
   QItemSection,
   QItemLabel,
-  QSpinnerRadio
+  QSpinnerRadio,
+  QSpace,
+  QDialog,
+  QFab,
+  QFabAction,
+  QPageSticky,
+  QResponsive,
+  QSelect,
+  QSplitter
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -75,7 +83,15 @@ Vue.use(Quasar, {
     QItem,
     QItemSection,
     QItemLabel,
-    QSpinnerRadio
+    QSpinnerRadio,
+    QSpace,
+    QDialog,
+    QFab,
+    QFabAction,
+    QPageSticky,
+    QResponsive,
+    QSelect,
+    QSplitter
   },
   directives: {
     Ripple,

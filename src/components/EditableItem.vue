@@ -1,38 +1,33 @@
 <template>
-  <q-item clickable v-ripple>
-    <q-item-section>
-      <q-item-label>{{ label }}</q-item-label>
-      <q-item-label caption>
-        {{ newValue }}
-      </q-item-label>
-    </q-item-section>
-    <q-popup-edit
-      v-model="newValue"
-      buttons
-      label-set="Save"
-      label-cancel="Close"
-      :validate="valueValidation"
-      @hide="valueValidation"
+  <BaseItem :label="label" :value="value" @click="dialogOpen = true">
+    <BaseDialog
+      v-model="dialogOpen"
+      :title="titleDialog"
+      @before-show="onBeforeShow"
     >
-      <h4>Modifica {{ label }}</h4>
-      <q-input
-        outlined
-        bottom-slots
-        v-model="newValue"
-        :label="label"
-        dense
-        autofocus
-        counter
-        maxlength="20"
-        :error="errorValue"
-        :error-message="errorMessageValue"
-      >
-        <template v-slot:append>
-          <q-icon name="close" @click="newValue = ''" class="cursor-pointer" />
-        </template>
-      </q-input>
-    </q-popup-edit>
-  </q-item>
+      <q-form @submit.prevent="onSubmit" class="q-gutter-md">
+        <q-card-section>
+          <BaseInput
+            :type="type"
+            :maxLength="maxLength"
+            v-model="newValue"
+            :label="label"
+            lazy-rules
+            :rules="[
+              val =>
+                (val !== null && val !== '') ||
+                this.label + ' non può essere vuoto',
+              val => val !== this.value || 'é uguale al dato corrente'
+            ]"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Salva" type="submit" color="primary" />
+        </q-card-actions>
+      </q-form>
+    </BaseDialog>
+  </BaseItem>
 </template>
 
 <script>
@@ -45,31 +40,39 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    isTextarea: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       newValue: this.value,
-      errorValue: false,
-      errorMessageValue: ""
+      dialogOpen: false
     };
   },
   methods: {
-    valueValidation(x) {
-      if (x == "") {
-        this.errorValue = true;
-        this.errorMessageValue =
-          "Il campo " + this.label + " non può essere vuoto";
-        return false;
-      } else if (x != this.value && x != null) {
-        console.log("entro x" + x + " value " + this.value);
-        this.$emit("input", this.newValue);
-        this.$emit("data-change");
-      }
-      this.errorValue = false;
-      this.errorMessageValue = "";
-
-      return true;
+    onSubmit() {
+      this.$emit("input", this.newValue);
+      this.dialogOpen = false;
+    },
+    onBeforeShow() {
+      console.log("ciao ");
+      this.newValue = this.value;
+    }
+  },
+  computed: {
+    titleDialog() {
+      return "Modifica " + this.label;
+    },
+    type() {
+      if (this.isTextarea) return "textarea";
+      return "text";
+    },
+    maxLength() {
+      if (this.isTextarea) return 500;
+      return 20;
     }
   }
 };

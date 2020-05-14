@@ -20,15 +20,14 @@
       <q-tab-panel name="presentations">
         <PresentationTab />
       </q-tab-panel>
-
+      <q-tab-panel name="phrases">
+        <PhrasesTab />
+      </q-tab-panel>
       <q-tab-panel name="contents">
         <ContentsTab />
       </q-tab-panel>
       <q-tab-panel name="detectionContents">
         <DetectionContentsTab />
-      </q-tab-panel>
-      <q-tab-panel name="phrases">
-        <PhrasesTab />
       </q-tab-panel>
     </q-tab-panels>
   </div>

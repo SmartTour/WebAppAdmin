@@ -14,9 +14,6 @@ export default {
     let authorization = "Bearer " + token;
 
     apiClient.defaults.headers.common["Authorization"] = authorization;
-    let api = apiClient;
-
-    console.log(api);
   },
   login(credentials) {
     console.log(credentials);
@@ -25,13 +22,25 @@ export default {
   modifyUser(userData) {
     return apiClient.put("/users/me", userData);
   },
-  getUsers() {
-    return apiClient.get("/users");
+  getAgency() {
+    return apiClient.get("/agencies/mine");
   },
-  getAgencies() {
-    return apiClient.get("/agencies");
+  modifyAgency(agencyData) {
+    return apiClient.put("/agencies/mine", agencyData);
   },
-  getAgenciesPublic() {
-    return apiClient.get("/agencies");
+  getBaseTour() {
+    return apiClient.get("/baseTours");
+  },
+  getBaseTourById(id) {
+    return apiClient.get("/baseTours/" + id);
+  },
+  addBaseTour(baseTour) {
+    return apiClient.post("/baseTours", baseTour);
+  },
+  modifyBaseTour(baseTour) {
+    return apiClient.put("/baseTours/" + baseTour.id, baseTour);
+  },
+  deleteBaseTourById(id) {
+    return apiClient.delete("/baseTours/" + id);
   }
 };

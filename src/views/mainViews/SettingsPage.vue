@@ -2,75 +2,52 @@
   <div class="q-pa-md">
     <q-list bordered padding>
       <q-item-label header>User Data </q-item-label>
+      <EditableItem v-model="firstName" label="First Name" />
+      <EditableItem v-model="lastName" label="Last Name" />
+      <EditableItem v-model="username" label="Username" />
 
-      <EditableItem
-        v-on:data-change="updateUserToStore"
-        v-model="user.firstName"
-        label="First Name"
-      />
-      <EditableItem
-        v-on:data-change="updateUserToStore"
-        v-model="user.lastName"
-        label="Last Name"
-      />
+      <PasswordEditableItem v-model="password" />
 
-      <EditableItem
-        v-on:data-change="updateUserToStore"
-        v-model="user.username"
-        label="Username"
-      />
-
-      <EditableItem
-        v-on:data-change="updateUserToStore"
-        v-model="user.password"
-        label="Password"
-      />
-
+      <q-separator spaced />
+      <q-item-label header>Agency Data </q-item-label>
+      <EditableItem v-model="name" label="Nome" />
+      <EditableItem v-model="titleSmartTour" label="Titolo Smart Tour" />
       <q-separator spaced />
       <q-item-label header>General</q-item-label>
     </q-list>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapFields } from "@/store/helpers/storeHelpers.js";
+import PasswordEditableItem from "@/components/PasswordEditableItem.vue";
 import EditableItem from "@/components/EditableItem.vue";
+
 export default {
   components: {
+    PasswordEditableItem,
     EditableItem
   },
   beforeCreate() {
     this.$store.dispatch("layoutState/updateType", "default");
   },
   data() {
-    return {};
+    return {
+      error: false
+    };
   },
   computed: {
-    ...mapState("userState", ["user"])
-  },
-  methods: {
-    ...mapActions("userState", ["updateUser"]),
-    updateUserToStore() {
-      console.log("devo aggiornare l'utente " + this.user);
-      this.$q.loading.show();
-      this.updateUser(this.user)
-        .then(() => {
-          this.$q.loading.hide();
-          this.$q.notify({
-            type: "positive",
-            message: "done"
-          });
-        })
-        .catch(err => {
-          this.$q.loading.hide();
-          let errorMessage = err.response
-            ? err.response.data.message
-            : "server al momento non disponibile";
-          this.$q.notify({
-            type: "negative",
-            message: errorMessage
-          });
-        });
-    }
+    ...mapFields({
+      fields: ["firstName", "lastName", "username", "password"],
+      module: "userState",
+      base: "user",
+      action: "userState/updateUser"
+    }),
+    ...mapFields({
+      fields: ["name", "titleSmartTour"],
+      module: "userState",
+      base: "agency",
+      action: "userState/updateAgency"
+    })
   }
 };
 </script>
