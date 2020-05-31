@@ -47,7 +47,16 @@ import {
   QPageSticky,
   QResponsive,
   QSelect,
-  QSplitter
+  QSplitter,
+  QEditor,
+  QUploader,
+  QFile,
+  QIntersection,
+  QCarousel,
+  QCarouselControl,
+  QCarouselSlide,
+  QRadio,
+  QVideo
 } from "quasar";
 
 Vue.use(Quasar, {
@@ -91,7 +100,16 @@ Vue.use(Quasar, {
     QPageSticky,
     QResponsive,
     QSelect,
-    QSplitter
+    QSplitter,
+    QEditor,
+    QUploader,
+    QFile,
+    QIntersection,
+    QCarousel,
+    QCarouselControl,
+    QCarouselSlide,
+    QRadio,
+    QVideo
   },
   directives: {
     Ripple,

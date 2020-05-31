@@ -1,8 +1,13 @@
 <template>
   <q-card class="my-card fixed-center q-pa-md">
-    <q-card-section>
-      <div class="text-h6">LOGIN</div>
+    <q-card-section align="center">
+      <q-avatar size="72px">
+        <img src="../../assets/logo.png" />
+      </q-avatar>
     </q-card-section>
+    <!-- <q-card-section align="center">
+      <div class="text-h4">LOGIN</div>
+    </q-card-section> -->
 
     <q-card-section>
       <div class="q-pa-md" style="min-width: 250px">

@@ -4,7 +4,7 @@ import router from "@/router";
 export const namespaced = true;
 export const state = {
   user: null,
-  agency: null
+  agency: { name: {}, titleSmartTour: {} }
 };
 export const mutations = {
   SET_USER(state, userData) {
@@ -63,6 +63,7 @@ export const actions = {
     ApiService.modifyAgency(newAgency)
       .then(response => {
         UserExperienceHelper.positiveNotify("success " + response.status);
+
         commit("SET_AGENCY", newAgency);
       })
       .catch(err => {
@@ -77,7 +78,7 @@ export const actions = {
     UserExperienceHelper.startLoading();
     return ApiService.getAgency()
       .then(response => {
-        UserExperienceHelper.positiveNotify("success " + response.toString);
+        UserExperienceHelper.positiveNotify("success " + response.status);
         commit("SET_AGENCY", response.data);
       })
       .catch(err => {

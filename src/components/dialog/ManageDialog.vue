@@ -1,5 +1,12 @@
 <template>
-  <q-dialog :value="value" @input="updateValue" full-width full-height>
+  <q-dialog
+    :value="value"
+    @input="updateValue"
+    full-width
+    full-height
+    style="overflow: hidden;"
+    class="row no-wrap"
+  >
     <q-card>
       <q-toolbar class="bg-primary text-white">
         <q-avatar><q-icon name="build" /> </q-avatar>
@@ -17,9 +24,13 @@
 
 <script>
 import ManageBaseTour from "@/views/manageViews/ManageBaseTour.vue";
+import ManageLiveTour from "@/views/manageViews/ManageLiveTour.vue";
+import ManageContent from "@/views/manageViews/ManageContent.vue";
 export default {
   components: {
-    BaseTour: ManageBaseTour
+    BaseTour: ManageBaseTour,
+    LiveTour: ManageLiveTour,
+    Content: ManageContent
   },
   props: {
     value: {

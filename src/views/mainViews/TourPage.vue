@@ -16,24 +16,22 @@
 
     <q-tab-panels v-model="this.tab" animated>
       <q-tab-panel name="baseTour">
-        <TabPageItem
-          :listItem="baseList"
+        <ItemList
+          :listItem="baseTours"
           typeItem="BaseTour"
           manageDialogTitle="gestisci tour"
         />
       </q-tab-panel>
       <q-tab-panel name="liveTour">
-        <TabPageItem
-          :listItem="liveList"
-          typeItem="Live Tour"
+        <ItemList
+          :listItem="liveTours"
+          typeItem="LiveTour"
           manageDialogTitle="gestisci tour"
         />
       </q-tab-panel>
     </q-tab-panels>
 
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="accent" @click="openDialog = true" />
-    </q-page-sticky>
+    <BaseFloatingActionButton @click="openDialog = true" />
     <BaseDialog v-model="openDialog" title="Crea un nuovo tuor">
       <slot name="createForm"><CreateTourForm /></slot>
     </BaseDialog>
@@ -41,18 +39,20 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import TabPageItem from "@/components/TabPageItem.vue";
+import ItemList from "@/components/list/ItemList.vue";
 import CreateTourForm from "@/components/form/CreateTourForm.vue";
 
 export default {
   components: {
-    TabPageItem,
+    ItemList,
     CreateTourForm
   },
 
-  beforeCreate() {
+  created: function() {
     this.$store.dispatch("layoutState/updateType", "default");
-    if (this.baseList == null) this.$store.dispatch("tourState/fetchBaseList");
+
+    this.$store.dispatch("tourState/fetchEntities", "baseTours");
+    this.$store.dispatch("tourState/fetchEntities", "liveTours");
   },
   data() {
     return {
@@ -61,8 +61,8 @@ export default {
     };
   },
   computed: {
-    ...mapState("tourState", ["liveList"]),
-    ...mapState("tourState", ["baseList"])
+    ...mapState("tourState", ["liveTours"]),
+    ...mapState("tourState", ["baseTours"])
   }
 };
 </script>

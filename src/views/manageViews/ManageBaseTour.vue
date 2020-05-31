@@ -8,10 +8,15 @@
     <q-card-section>
       <q-tab-panels v-model="this.tab" animated>
         <q-tab-panel name="edit">
-          ciao edit
+          <EditBaseTour :idItem="idItem" />
         </q-tab-panel>
         <q-tab-panel name="settings">
-          <SettingBaseTour :idItem="idItem" />
+          <SettingsItem
+            :entity="entity"
+            label="Base Tour"
+            @change-entity="onChange"
+            @delete-entity="onDelete"
+          />
         </q-tab-panel>
       </q-tab-panels>
     </q-card-section>
@@ -19,8 +24,10 @@
 </template>
 
 <script>
-import SettingBaseTour from "./settings/SettingBaseTour";
-import { mapGetters } from "vuex";
+import SettingsItem from "@/components/itemDetail/SettingsItem.vue";
+
+import EditBaseTour from "./edits/EditBaseTour";
+import { mapActions, mapGetters } from "vuex";
 export default {
   props: {
     idItem: {
@@ -29,15 +36,38 @@ export default {
     }
   },
   components: {
-    SettingBaseTour
+    SettingsItem,
+    EditBaseTour
   },
   data() {
     return {
-      tab: "edit"
+      tab: "edit",
+      nameEntity: "baseTours"
     };
   },
   computed: {
-    ...mapGetters("tourState", ["getBaseById"])
+    ...mapGetters("tourState", ["getEntityById"]),
+    entity() {
+      return {
+        ...this.getEntityById({
+          nameEntity: this.nameEntity,
+          id: this.idItem
+        })
+      };
+    }
+  },
+  methods: {
+    ...mapActions("tourState", ["deleteEntity", "updateEntity"]),
+
+    onChange({ nameField, valueField }) {
+      let copyOfEntity = { ...this.entity };
+      copyOfEntity[nameField] = valueField;
+      this.updateEntity({ nameEntity: this.nameEntity, entity: copyOfEntity });
+      console.log(copyOfEntity);
+    },
+    onDelete() {
+      this.deleteEntity({ nameEntity: this.nameEntity, id: this.idItem });
+    }
   }
 };
 </script>

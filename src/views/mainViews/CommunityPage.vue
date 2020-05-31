@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <q-page padding>
     <h1>This is my community page</h1>
-  </div>
+  </q-page>
 </template>
 <script>
 export default {
-  beforeCreate() {
+  created: function() {
     this.$store.dispatch("layoutState/updateType", "default");
   }
 };

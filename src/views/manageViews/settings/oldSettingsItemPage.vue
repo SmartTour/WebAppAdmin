@@ -1,12 +1,12 @@
 <template>
   <div class="q-pa-md">
     <q-list bordered padding>
-      <q-item-label header>Base Tour </q-item-label>
+      <q-item-label header>{{ label }} </q-item-label>
       <EditableItem v-model="title" label="Titolo" />
       <EditableItem
         v-model="description"
         label="Descrizione"
-        :isTextarea="true"
+        typeInput="textarea"
       />
 
       <q-separator spaced />
@@ -28,45 +28,46 @@ export default {
     DeleteItem
   },
   props: {
+    label: {
+      type: String,
+      required: true
+    },
+    nameEntity: {
+      type: String,
+      defalult: "baseTours"
+    },
     idItem: {
       type: Number,
       required: true
     }
   },
-  data() {
-    return {
-      newTour: this.baseTour
-    };
-  },
   computed: {
     title: {
       get() {
-        return this.Gettitle(this.idItem);
+        return this.GETtitle(this.nameEntity, this.idItem);
       },
       set(value) {
-        return this.Settitle(value, this.idItem);
+        return this.SETtitle(this.nameEntity, value, this.idItem);
       }
     },
     description: {
       get() {
-        return this.Getdescription(this.idItem);
+        return this.GETdescription(this.nameEntity, this.idItem);
       },
       set(value) {
-        return this.Setdescription(value, this.idItem);
+        return this.SETdescription(this.nameEntity, value, this.idItem);
       }
     }
   },
   methods: {
-    ...mapActions("tourState", ["deleteBaseTour"]),
+    ...mapActions("tourState", ["deleteEntity"]),
     ...mapHandlingFunctions({
-      fields: ["title", "description"],
-      getterReference: "tourState/getBaseById",
-      actionOnSetReference: "tourState/updateBaseTour"
+      fields: ["title", "description"]
     }),
     onDelete(value) {
       console.log(value);
       if (value) {
-        this.deleteBaseTour(this.idItem);
+        this.deleteEntity({ nameEntity: this.nameEntity, id: this.idItem });
       }
     }
   }

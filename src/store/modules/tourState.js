@@ -2,76 +2,134 @@ import ApiService from "../../services/ApiService";
 import UserExperienceHelper from "../helpers/UserExperienceHelper.js";
 export const namespaced = true;
 export const state = {
-  baseList: [],
-  liveList: [],
-  idItem: 1
+  baseTours: [],
+  liveTours: [],
+  contents: [],
+  questions: [],
+  phrases: [],
+  detectionContents: [],
+  externalMedias: [],
+  internalMedias: []
 };
 export const mutations = {
-  SET_BASE_LIST(state, baseList) {
-    state.baseList = baseList;
+  SET_ENTITY(state, { entity, nameEntity }) {
+    state[nameEntity] = entity;
   },
-  SET_LIVE_LIST(state, liveList) {
-    state.liveList = liveList;
+  UPDATE_VALUE_OF_ENTITY(state, { entity, nameEntity, index }) {
+    //vuex non riconosce i cambiamenti delle entità dell'array, quindi simulo un cambiamento dell'array stesso
+    //in questo modo i componenti dipendenti si aggiornano
+    let copyStateEntity = state[nameEntity].slice();
+    copyStateEntity[index] = entity;
+    state[nameEntity] = copyStateEntity;
   },
   RELOAD_TOUR() {
     location.reload();
     //state.baseTour.push(baseTour);
+  },
+  SET_INTERNAL_MEDIAS(state, internalMedias) {
+    state.internalMedias = internalMedias;
   }
 };
 export const actions = {
-  fetchBaseList({ commit }) {
+  fetchEntities({ commit }, nameEntity) {
     UserExperienceHelper.startLoading();
-    ApiService.getBaseTour()
+    ApiService.getEntities(nameEntity)
       .then(({ data }) => {
-        console.log("BaseTour caricati " + data);
-        commit("SET_BASE_LIST", data);
+        commit("SET_ENTITY", { nameEntity: nameEntity, entity: data });
       })
       .catch(err => {
-        UserExperienceHelper.negativeNotify(err, "baseTour");
+        UserExperienceHelper.negativeNotify(err, nameEntity);
       })
       .then(() => {
         UserExperienceHelper.stopLoading();
       });
   },
-  addBaseTour({ commit }, baseTour) {
+  addEntity({ commit }, { nameEntity, entity }) {
     UserExperienceHelper.startLoading();
-    ApiService.addBaseTour(baseTour)
+    ApiService.addEntity(nameEntity, entity)
       .then(({ data }) => {
         console.log("baseTour Aggiunta " + data);
         commit("RELOAD_TOUR");
       })
       .catch(err => {
-        UserExperienceHelper.negativeNotify(err, "baseTour");
+        UserExperienceHelper.negativeNotify(err, nameEntity);
       })
       .then(() => {
         UserExperienceHelper.stopLoading();
       });
   },
-  updateBaseTour({ commit }, baseTour) {
+  updateEntity({ commit, getters }, { nameEntity, entity }) {
     UserExperienceHelper.startLoading();
-    ApiService.modifyBaseTour(baseTour)
-      .then(({ data }) => {
-        console.log("baseTour modificata " + data);
-        UserExperienceHelper.positiveNotify("success ");
-        commit("RELOAD_TOUR");
+    ApiService.modifyEntity(nameEntity, entity)
+      .then(({ data, status }) => {
+        console.log(" modificata ");
+        console.log(data);
+        let oldEntity = getters.getEntityById({
+          nameEntity: nameEntity,
+          id: entity.id
+        });
+        let index = getters.getIndexOfEntity({
+          nameEntity: nameEntity,
+          entity: oldEntity
+        });
+        console.log(index);
+        console.log(oldEntity);
+        if (index != -1) {
+          commit("UPDATE_VALUE_OF_ENTITY", {
+            entity: entity,
+            nameEntity: nameEntity,
+            index: index
+          });
+          UserExperienceHelper.positiveNotify(
+            "success " + status + " " + nameEntity
+          );
+        }
       })
       .catch(err => {
-        UserExperienceHelper.negativeNotify(err, "baseTour");
+        console.log(err);
+        UserExperienceHelper.negativeNotify(err, nameEntity);
       })
       .then(() => {
         UserExperienceHelper.stopLoading();
       });
   },
-  deleteBaseTour({ commit }, idBaseTour) {
+  deleteEntity({ commit }, { nameEntity, id }) {
     UserExperienceHelper.startLoading();
-    ApiService.deleteBaseTourById(idBaseTour)
+    ApiService.deleteEntityById(nameEntity, id)
       .then(({ data }) => {
-        console.log("baseTour modificata " + data);
+        console.log(nameEntity + " modificata " + data);
         UserExperienceHelper.positiveNotify("success ");
         commit("RELOAD_TOUR");
       })
       .catch(err => {
-        UserExperienceHelper.negativeNotify(err, "baseTour");
+        UserExperienceHelper.negativeNotify(err, nameEntity);
+      })
+      .then(() => {
+        UserExperienceHelper.stopLoading();
+      });
+  },
+  fetchInternalMedias({ commit }) {
+    UserExperienceHelper.startLoading();
+    ApiService.getFilesName()
+      .then(({ data }) => {
+        commit("SET_INTERNAL_MEDIAS", data);
+      })
+      .catch(err => {
+        UserExperienceHelper.negativeNotify(err, "media");
+      })
+      .then(() => {
+        UserExperienceHelper.stopLoading();
+      });
+  },
+  deleteInternalMedia({ commit }, name) {
+    UserExperienceHelper.startLoading();
+    ApiService.deleteFile(name)
+      .then(({ status }) => {
+        UserExperienceHelper.positiveNotify("success " + status);
+        commit("RELOAD_TOUR");
+      })
+      .catch(err => {
+        UserExperienceHelper.negativeNotify(err, "media");
       })
       .then(() => {
         UserExperienceHelper.stopLoading();
@@ -79,14 +137,10 @@ export const actions = {
   }
 };
 export const getters = {
-  getBaseById: state => id => {
-    console.log("almeno entro nell funzione");
-    return state.baseList.find(item => item.id == id);
+  getEntityById: state => ({ nameEntity, id }) => {
+    return state[nameEntity].find(item => item.id == id);
   },
-  getBaseTourById: (state, getters, id) => {
-    return getters.getBaseById(id);
-  },
-  getLiveById: state => id => {
-    return state.liveList.find(item => item.id == id);
+  getIndexOfEntity: state => ({ nameEntity, entity }) => {
+    return state[nameEntity].indexOf(entity);
   }
 };

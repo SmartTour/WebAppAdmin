@@ -10,9 +10,19 @@
     "icon": "explore"
   },
   {
-    "label": "Contenuti smart",
-    "namedRoute": "SmartThings",
-    "icon": "dynamic_feed"
+    "label": "Contenuti",
+    "namedRoute": "Contents",
+    "icon": "art_track"
+  },
+  {
+    "label": "Rilevatori",
+    "namedRoute": "DetectionContents",
+    "icon": "wifi_tethering"
+  },
+  {
+    "label": "Frasi",
+    "namedRoute": "Phrases",
+    "icon": "short_text"
   },
   {
     "label": "Le mie mappe",

@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <q-page padding id="loginPage">
     <div class="q-pa-md row items-start q-gutter-md">
       <LoginItem />
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script>
@@ -21,3 +21,11 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+#loginPage {
+  background-image: url("../assets/backgrounds/login.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>

@@ -1,19 +1,32 @@
 import axios from "axios";
+import { urlWebApi } from "@/assets/config.json";
 
+const baseURL = urlWebApi;
+var authorizationString = "";
 const apiClient = axios.create({
-  baseURL: `http://localhost:57929/api`,
+  baseURL: baseURL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json"
   },
   timeout: 5000
 });
-
+const apiClientForFile = axios.create({
+  baseURL: baseURL,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "multipart/form-data"
+  },
+  timeout: 10000
+});
+const FormData = require("form-data");
 export default {
   setToken(token) {
     let authorization = "Bearer " + token;
 
     apiClient.defaults.headers.common["Authorization"] = authorization;
+    apiClientForFile.defaults.headers.common["Authorization"] = authorization;
+    authorizationString = authorization;
   },
   login(credentials) {
     console.log(credentials);
@@ -28,19 +41,44 @@ export default {
   modifyAgency(agencyData) {
     return apiClient.put("/agencies/mine", agencyData);
   },
-  getBaseTour() {
-    return apiClient.get("/baseTours");
+
+  //for entity
+  getEntities(resource) {
+    return apiClient.get("/" + resource);
   },
-  getBaseTourById(id) {
-    return apiClient.get("/baseTours/" + id);
+  getEntityById(resource, id) {
+    return apiClient.get("/" + resource + "/" + id);
   },
-  addBaseTour(baseTour) {
-    return apiClient.post("/baseTours", baseTour);
+  addEntity(resource, entity) {
+    return apiClient.post("/" + resource, entity);
   },
-  modifyBaseTour(baseTour) {
-    return apiClient.put("/baseTours/" + baseTour.id, baseTour);
+  modifyEntity(resource, entity) {
+    return apiClient.put("/" + resource + "/" + entity.id, entity);
   },
-  deleteBaseTourById(id) {
-    return apiClient.delete("/baseTours/" + id);
+  deleteEntityById(resource, id) {
+    return apiClient.delete("/" + resource + "/" + id);
+  },
+
+  //for file
+  uploadFile(resource) {
+    const form = new FormData();
+    form.append("uploadedFile", resource);
+    return apiClientForFile.post("/files/upload", form);
+  },
+  downloadFile(filename) {
+    return apiClientForFile.post("/files/download?filename=" + filename);
+  },
+  getFilesName() {
+    return apiClientForFile.get("/files/filenames");
+  },
+  deleteFile(filename) {
+    return apiClientForFile.delete("/files?filename=" + filename);
+  },
+
+  getUrl() {
+    return baseURL;
+  },
+  getAuthorization() {
+    return authorizationString;
   }
 };

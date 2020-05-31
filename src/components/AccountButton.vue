@@ -1,12 +1,12 @@
 <template>
   <div class="q-pa-md">
-    <q-btn flat round dense icon="account_circle">
+    <q-btn flat dense icon="account_circle">
       <q-menu>
         <div class="row no-wrap q-pa-md">
           <div class="column items-center">
             <q-avatar size="72px">
               <!-- <img src="https://cdn.quasar.dev/img/avatar4.jpg" /> -->
-              <img src="@/assets/images/ciao.jpg" />
+              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
             </q-avatar>
 
             <div class="text-subtitle1 q-mt-md q-mb-xs">

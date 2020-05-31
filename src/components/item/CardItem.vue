@@ -23,7 +23,7 @@
         <q-btn flat color="primary" label="MANAGE" @click="openDialog = true" />
       </q-card-actions>
     </q-card>
-    <BaseManageDialog
+    <ManageDialog
       v-model="openDialog"
       :title="manageDialogTitle"
       :typeItem="typeItem"
@@ -33,7 +33,12 @@
 </template>
 
 <script>
+import ManageDialog from "@/components/dialog/ManageDialog.vue";
+
 export default {
+  components: {
+    ManageDialog
+  },
   data() {
     return {
       openDialog: false

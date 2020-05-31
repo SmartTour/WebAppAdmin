@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -48,16 +48,15 @@ export default {
   },
 
   methods: {
-    ...mapActions("tourState", ["addBaseTour"]),
-    ...mapState("userState", ["agency"]),
+    ...mapActions("tourState", ["addEntity"]),
     onSubmit() {
-      let baseTour = {
+      let tour = {
         Title: this.title,
         Description: this.description
       };
-      console.log("ecco il body request " + baseTour);
+      let nameEntity = this.typeTour == "BaseTour" ? "baseTours" : "liveTours";
 
-      this.addBaseTour(baseTour);
+      this.addEntity({ nameEntity: nameEntity, entity: tour });
     },
 
     onReset() {

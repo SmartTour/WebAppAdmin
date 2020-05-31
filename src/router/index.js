@@ -11,7 +11,9 @@ import NotFoundPage from "../views/NotFoundPage.vue";
 import AgencyPage from "../views/mainViews/AgencyPage.vue";
 import MapsPage from "../views/mainViews/MapsPage.vue";
 import MediaPage from "../views/mainViews/MediaPage.vue";
-import SmartThingsPage from "../views/mainViews/SmartThingsPage.vue";
+import ContentsPage from "../views/mainViews/ContentsPage.vue";
+import DetectionContentsPage from "../views/mainViews/DetectionContentsPage.vue";
+import PhrasesPage from "../views/mainViews/PhrasesPage.vue";
 import CommunityPage from "../views/mainViews/CommunityPage.vue";
 import SettingsPage from "../views/mainViews/SettingsPage.vue";
 import TourPage from "../views/mainViews/TourPage.vue";
@@ -60,9 +62,21 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/smartThings",
-    name: "SmartThings",
-    component: SmartThingsPage,
+    path: "/contents",
+    name: "Contents",
+    component: ContentsPage,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/detectionContents",
+    name: "DetectionContents",
+    component: DetectionContentsPage,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/phrases",
+    name: "Phrases",
+    component: PhrasesPage,
     meta: { requiresAuth: true }
   },
   {

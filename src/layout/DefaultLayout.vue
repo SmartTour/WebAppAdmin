@@ -1,22 +1,15 @@
 <template>
   <div class="q-pa-md">
     <q-layout view="hHh lpR fFf">
-      <q-header elevated class="bg-primary text-white">
+      <q-header elevated class="bg-primary text-white ">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
+          <q-avatar>
+            <img src="../assets/logo.svg" />
+          </q-avatar>
           <q-toolbar-title>
-            <q-avatar>
-              <q-icon name="explore" />
-            </q-avatar>
-            Smart tour
+            SMART TOUR ADMIN
           </q-toolbar-title>
-          <q-btn
-            flat
-            round
-            dense
-            @click="$q.fullscreen.toggle()"
-            :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-          />
           <AccountButton />
         </q-toolbar>
       </q-header>
@@ -48,6 +41,22 @@
 
               <q-item-section>
                 {{ item.label }}
+              </q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable v-ripple @click="$q.fullscreen.toggle()">
+              <q-item-section avatar>
+                <q-icon
+                  :name="
+                    $q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'
+                  "
+                />
+              </q-item-section>
+
+              <q-item-section>
+                {{
+                  $q.fullscreen.isActive ? "schermo piccolo" : "schermo intero"
+                }}
               </q-item-section>
             </q-item>
           </q-list>
@@ -85,3 +94,11 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+// #page {
+//   background-image: url("../assets/backgrounds/login.png");
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+</style>

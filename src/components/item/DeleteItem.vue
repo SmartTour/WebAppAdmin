@@ -1,14 +1,15 @@
 <template>
   <BaseItem :label="label" @click="dialogOpen = true">
-    <BaseConfirmDialog
-      v-model="dialogOpen"
-      @confirmation-user="onConfirmation"
-    />
+    <ConfirmDialog v-model="dialogOpen" @confirmation-user="onConfirmation" />
   </BaseItem>
 </template>
 
 <script>
+import ConfirmDialog from "@/components/dialog/ConfirmDialog.vue";
 export default {
+  components: {
+    ConfirmDialog
+  },
   props: {
     label: {
       type: String

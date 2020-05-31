@@ -8,7 +8,7 @@
       <q-form @submit.prevent="onSubmit" class="q-gutter-md">
         <q-card-section>
           <BaseInput
-            :type="type"
+            :type="typeInput"
             :maxLength="maxLength"
             v-model="newValue"
             :label="label"
@@ -41,9 +41,9 @@ export default {
       type: String,
       required: true
     },
-    isTextarea: {
-      type: Boolean,
-      default: false
+    typeInput: {
+      type: String,
+      default: "text"
     }
   },
   data() {
@@ -66,12 +66,8 @@ export default {
     titleDialog() {
       return "Modifica " + this.label;
     },
-    type() {
-      if (this.isTextarea) return "textarea";
-      return "text";
-    },
     maxLength() {
-      if (this.isTextarea) return 500;
+      if (this.typeInput == "textarea") return 500;
       return 20;
     }
   }

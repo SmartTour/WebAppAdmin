@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  beforeCreate() {
+  created: function() {
     this.$store.dispatch("layoutState/updateType", "default");
   }
 };
