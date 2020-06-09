@@ -7,6 +7,7 @@
 </template>
 <script>
 export default {
+  name: "AboutUsPage",
   beforeCreate() {
     this.$store.dispatch("layoutState/updateType", "public");
   }

@@ -1,5 +1,6 @@
 import ApiService from "@/services/ApiService.js";
 import UserExperienceHelper from "@/store/helpers/UserExperienceHelper.js";
+import store from "@/store";
 export function uploadFiles(files) {
   var filesNotUpload = [];
   UserExperienceHelper.startLoading();
@@ -18,6 +19,7 @@ export function uploadFiles(files) {
   );
 
   Promise.all(promiseArray).then(() => {
+    store.dispatch("tourState/fetchInternalMedias");
     UserExperienceHelper.stopLoading();
   });
   return filesNotUpload;

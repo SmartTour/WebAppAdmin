@@ -5,6 +5,7 @@
 </template>
 <script>
 export default {
+  name: "CommunityPage",
   created: function() {
     this.$store.dispatch("layoutState/updateType", "default");
   }

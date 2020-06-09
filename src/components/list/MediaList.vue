@@ -6,6 +6,7 @@
         :index="index"
         :isExternalMedia="isExternalMedia"
         @click="onClickMediaItem"
+        :selectable="selectable"
       />
     </BaseIntersection>
     <CarouselDialog
@@ -21,6 +22,7 @@ import MediaItem from "@/components/item/MediaItem.vue";
 import CarouselDialog from "@/components/dialog/CarouselDialog.vue";
 
 export default {
+  name: "MediaList",
   components: {
     CarouselDialog,
     MediaItem
@@ -33,6 +35,10 @@ export default {
     isExternalMedia: {
       type: Boolean,
       default: false
+    },
+    selectable: {
+      type: Boolean,
+      required: true
     }
   },
   methods: {

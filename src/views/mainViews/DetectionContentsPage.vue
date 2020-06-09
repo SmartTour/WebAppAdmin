@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "DetectionContentsPage",
   created: function() {
     this.$store.dispatch("layoutState/updateType", "default");
   }

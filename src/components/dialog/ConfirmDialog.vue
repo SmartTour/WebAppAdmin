@@ -22,6 +22,7 @@
 
 <script>
 export default {
+  name: "ConfirmDialog",
   inheritAttrs: false,
   props: {
     value: {

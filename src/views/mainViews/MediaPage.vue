@@ -2,10 +2,14 @@
   <q-page style="padding-top: 50px" class="q-pa-md">
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="interni">
-        <MediaList :listItem="internalMedias" />
+        <MediaList :listItem="internalMedias" :selectable="selectable" />
       </q-tab-panel>
       <q-tab-panel name="esterni">
-        <MediaList :listItem="externalMedias" :isExternalMedia="true" />
+        <MediaList
+          :listItem="externalMedias"
+          :isExternalMedia="true"
+          :selectable="selectable"
+        />
       </q-tab-panel>
     </q-tab-panels>
 
@@ -20,7 +24,9 @@
       v-model="openExternalForm"
       title="Aggiungi contenuti multimediali"
     >
-      <slot name="createForm"><AddMediaExternalForm /></slot>
+      <slot name="createForm"
+        ><AddMediaExternalForm @submit="openExternalForm = false"
+      /></slot>
     </BaseDialog>
 
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
@@ -51,6 +57,7 @@ import TabsItem from "@/components/toolbar/TabsItem.vue";
 import { mapState } from "vuex";
 
 export default {
+  name: "MediaPage",
   components: {
     AddMediaInternalForm,
     AddMediaExternalForm,
@@ -62,6 +69,12 @@ export default {
 
     this.$store.dispatch("tourState/fetchInternalMedias");
     this.$store.dispatch("tourState/fetchEntities", "externalMedias");
+  },
+  props: {
+    selectable: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

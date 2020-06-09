@@ -32,6 +32,7 @@
 <script>
 import { mapActions } from "vuex";
 export default {
+  name: "AddMediaExternalForm",
   data() {
     return {
       name: "",
@@ -49,6 +50,7 @@ export default {
       };
 
       this.addEntity({ nameEntity: "externalMedias", entity: externalMedia });
+      this.$emit("submit");
     }
   }
 };

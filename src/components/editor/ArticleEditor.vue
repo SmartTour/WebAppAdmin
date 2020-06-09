@@ -1,8 +1,29 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
+  <div class="q-gutter-sm">
     <q-editor
       v-model="value"
+      toolbar-toggle-color="accent"
+      toolbar-bg="grey-2"
       :dense="$q.screen.lt.md"
+      :definitions="{
+        save: {
+          tip: 'Salva il tuo contenuto',
+          icon: 'save',
+          label: 'Save',
+          handler: onSave
+        },
+        addMedia: {
+          tip: 'Aggiungi un contenuto multimediale',
+          icon: 'add_to_photos',
+          label: 'Aggiungi Media',
+          handler: onAddMedia
+        },
+        preview: {
+          tip: 'Visualizza anteprima',
+          icon: 'visibility',
+          handler: onPreview
+        }
+      }"
       :toolbar="[
         [
           {
@@ -15,9 +36,9 @@
         ],
         ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
         ['token', 'hr', 'link', 'custom_btn'],
-        ['print', 'fullscreen'],
+        ['addMedia'],
         [
-          {
+          ({
             label: $q.lang.editor.formatting,
             icon: $q.iconSet.editor.formatting,
             list: 'no-icons',
@@ -56,12 +77,13 @@
               'verdana'
             ]
           },
-          'removeFormat'
+          'removeFormat')
         ],
         ['quote', 'unordered', 'ordered', 'outdent', 'indent'],
 
         ['undo', 'redo'],
-        ['viewsource']
+        ['preview', 'save'],
+        ['fullscreen', 'viewsource']
       ]"
       :fonts="{
         arial: 'Arial',
@@ -74,14 +96,42 @@
         verdana: 'Verdana'
       }"
     />
-    <q-btn v-if="canSave" align="right" label="salva" @click="onSave" />
+    <BaseLayoutDialog v-model="openPreviewDialog" title="Anteprima"
+      ><PreviewItem :contentHtml="value" align="center"
+    /></BaseLayoutDialog>
+    <AddDialog
+      v-model="openMediaDialog"
+      title="Sceglie il tuo media"
+      @done-selection="onDoneSelectionMedia"
+    >
+      <MediaPage :selectable="true" />
+    </AddDialog>
+    <BaseLayoutDialog v-model="openSettingMedia" title="Aggiungi media">
+      <MediaHtmlEditor :listMedia="listMedia" @addMediaHtml="onAddMediaHtml" />
+    </BaseLayoutDialog>
   </div>
 </template>
 
 <script>
+import AddDialog from "@/components/dialog/AddDialog.vue";
+import MediaPage from "@/views/mainViews/MediaPage.vue";
+import PreviewItem from "@/components/item/PreviewItem.vue";
+import MediaHtmlEditor from "@/components/editor/MediaHtmlEditor.vue";
+
 export default {
+  name: "ArticleEditor",
+  components: {
+    AddDialog,
+    MediaPage,
+    PreviewItem,
+    MediaHtmlEditor
+  },
   data() {
     return {
+      openPreviewDialog: false,
+      openMediaDialog: false,
+      openSettingMedia: false,
+      listMedia: [],
       value: this.oldContent
     };
   },
@@ -98,6 +148,21 @@ export default {
   methods: {
     onSave() {
       this.$emit("on-save", this.value);
+    },
+    onAddMedia() {
+      this.openMediaDialog = true;
+    },
+    onPreview() {
+      this.openPreviewDialog = true;
+    },
+    onDoneSelectionMedia(listMedia) {
+      this.openSettingMedia = true;
+      this.listMedia = listMedia;
+    },
+    onAddMediaHtml(mediaHtml) {
+      console.log(mediaHtml);
+      this.value += mediaHtml;
+      this.openSettingMedia = false;
     }
   }
 };

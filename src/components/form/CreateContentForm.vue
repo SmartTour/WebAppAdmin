@@ -8,7 +8,7 @@
         :rules="[val => !!val || 'Il campo non può essere vuoto']"
       />
       <div class="q-gutter-sm">
-        <q-radio v-model="type" val="article" label="Articolo" />
+        <q-radio v-model="type" val="Article" label="Articolo" />
         <q-radio disable v-model="type" val="image" label="Immagine" />
         <q-radio disable v-model="type" val="video" label="Video" />
         <q-radio disable v-model="type" val="audio" label="Audio" />
@@ -31,10 +31,11 @@
 <script>
 import { mapActions } from "vuex";
 export default {
+  name: "CreateContentForm",
   data() {
     return {
       title: "",
-      type: "article"
+      type: "Article"
     };
   },
 
@@ -43,10 +44,11 @@ export default {
     onSubmit() {
       let content = {
         Title: this.title,
-        type: this.type
+        Type: this.type
       };
 
       this.addEntity({ nameEntity: "contents", entity: content });
+      this.$emit("submit");
     },
 
     onReset() {

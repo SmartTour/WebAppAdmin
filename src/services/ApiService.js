@@ -46,6 +46,9 @@ export default {
   getEntities(resource) {
     return apiClient.get("/" + resource);
   },
+  getEntitiesFiltered(resource, params) {
+    return apiClient.get("/" + resource + "?" + params);
+  },
   getEntityById(resource, id) {
     return apiClient.get("/" + resource + "/" + id);
   },

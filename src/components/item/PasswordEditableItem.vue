@@ -71,6 +71,7 @@
 
 <script>
 export default {
+  name: "PasswordEditableItem",
   props: {
     value: {
       type: String,

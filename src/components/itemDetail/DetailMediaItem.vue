@@ -26,6 +26,7 @@
 import DeleteItem from "@/components/item/DeleteItem.vue";
 import { mapActions } from "vuex";
 export default {
+  name: "DetailMediaItem",
   components: {
     DeleteItem
   },

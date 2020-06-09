@@ -16,6 +16,7 @@
 
 <script>
 export default {
+  name: "BaseItem",
   props: {
     label: {
       type: String,

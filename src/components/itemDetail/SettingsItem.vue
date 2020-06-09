@@ -8,6 +8,7 @@
         label="Titolo"
       />
       <EditableItem
+        v-if="entity.description"
         :value="entity.description"
         @input="onChangeDescription"
         label="Descrizione"
@@ -25,6 +26,7 @@
 import DeleteItem from "@/components/item/DeleteItem.vue";
 import EditableItem from "@/components/item/EditableItem.vue";
 export default {
+  name: "SettingsItem",
   components: {
     EditableItem,
     DeleteItem

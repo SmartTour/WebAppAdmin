@@ -3,6 +3,7 @@ import UserExperienceHelper from "../helpers/UserExperienceHelper.js";
 export const namespaced = true;
 export const state = {
   baseTours: [],
+  baseTourZones: [],
   liveTours: [],
   contents: [],
   questions: [],
@@ -22,9 +23,13 @@ export const mutations = {
     copyStateEntity[index] = entity;
     state[nameEntity] = copyStateEntity;
   },
+  ADD_ENTITY_TO_ENTITIES(state, { entity, nameEntity }) {
+    let copyStateEntity = state[nameEntity].slice();
+    copyStateEntity.push(entity);
+    state[nameEntity] = copyStateEntity;
+  },
   RELOAD_TOUR() {
     location.reload();
-    //state.baseTour.push(baseTour);
   },
   SET_INTERNAL_MEDIAS(state, internalMedias) {
     state.internalMedias = internalMedias;
@@ -44,14 +49,31 @@ export const actions = {
         UserExperienceHelper.stopLoading();
       });
   },
+  fetchEntitiesFiltered({ commit }, { nameEntity, params }) {
+    UserExperienceHelper.startLoading();
+    ApiService.getEntitiesFiltered(nameEntity, params)
+      .then(({ data }) => {
+        commit("SET_ENTITY", { nameEntity: nameEntity, entity: data });
+      })
+      .catch(err => {
+        UserExperienceHelper.negativeNotify(err, nameEntity);
+      })
+      .then(() => {
+        UserExperienceHelper.stopLoading();
+      });
+  },
   addEntity({ commit }, { nameEntity, entity }) {
     UserExperienceHelper.startLoading();
     ApiService.addEntity(nameEntity, entity)
       .then(({ data }) => {
-        console.log("baseTour Aggiunta " + data);
-        commit("RELOAD_TOUR");
+        console.log(data);
+        commit("ADD_ENTITY_TO_ENTITIES", {
+          nameEntity: nameEntity,
+          entity: data
+        });
       })
       .catch(err => {
+        console.log(err);
         UserExperienceHelper.negativeNotify(err, nameEntity);
       })
       .then(() => {

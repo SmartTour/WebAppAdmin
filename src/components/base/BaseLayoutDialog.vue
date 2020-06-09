@@ -5,23 +5,31 @@
     v-bind="$attrs"
     @before-show="onBeforeShow"
   >
-    <q-card style="width: 700px; max-width: 80vw;">
-      <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">{{ title }}</div>
-        <q-space />
-        <q-btn v-if="closeIcon" icon="close" flat round dense v-close-popup />
-      </q-card-section>
+    <q-layout
+      view="Lhh lpR fff"
+      container
+      class="bg-white"
+      style="width: 700px; max-width: 80vw;"
+    >
+      <q-header class="bg-accent">
+        <q-toolbar>
+          <q-toolbar-title>{{ title }}</q-toolbar-title>
+          <q-btn flat v-close-popup round dense icon="close" />
+        </q-toolbar>
+      </q-header>
 
-      <q-card-section>
-        <slot></slot>
-      </q-card-section>
-    </q-card>
+      <q-page-container>
+        <q-page padding>
+          <slot></slot>
+        </q-page>
+      </q-page-container>
+    </q-layout>
   </q-dialog>
 </template>
 
 <script>
 export default {
-  name: "BaseDialog",
+  name: "BaseLayoutDialog",
   inheritAttrs: false,
   props: {
     value: {

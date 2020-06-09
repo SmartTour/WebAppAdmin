@@ -46,6 +46,7 @@
 import { mapState } from "vuex";
 
 export default {
+  name: "AgencyPage",
   created: function() {
     this.$store.dispatch("layoutState/updateType", "default");
     this.$store.dispatch("userState/fetchAgency");

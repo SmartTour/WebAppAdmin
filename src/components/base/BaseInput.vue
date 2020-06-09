@@ -1,6 +1,7 @@
 <template>
   <q-input
     v-bind="$attrs"
+    color="secondary"
     filled
     bottom-slots
     :value="value"
@@ -19,6 +20,7 @@
 
 <script>
 export default {
+  name: "BaseInput",
   inheritAttrs: false,
   props: {
     value: {

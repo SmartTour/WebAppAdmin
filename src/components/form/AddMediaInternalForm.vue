@@ -22,6 +22,7 @@
 <script>
 import { uploadFiles } from "@/helpers/FileHelper.js";
 export default {
+  name: "AddMediaInternalForm",
   methods: {
     onUpload() {
       this.files = uploadFiles(this.files);

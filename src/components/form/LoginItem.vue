@@ -42,6 +42,7 @@
 
 import LoadDataMixin from "@/mixins/LoadDataMixin.js";
 export default {
+  name: "LoginItem",
   mixins: [LoadDataMixin],
   data() {
     return {

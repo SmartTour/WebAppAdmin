@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "PhrasesPage",
   created: function() {
     this.$store.dispatch("layoutState/updateType", "default");
   }

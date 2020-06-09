@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "BaseFloatingActionButton",
   props: {
     iconName: {
       type: String,

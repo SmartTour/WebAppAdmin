@@ -2,11 +2,10 @@
   <div class="row items-start q-gutter-md">
     <BaseIntersection v-for="item in listItem" :key="item.id">
       <CardItem
-        :idItem="item.id"
-        :title="item.title"
-        :description="item.description"
+        :item="item"
         :typeItem="typeItem"
         :manageDialogTitle="manageDialogTitle"
+        :selectable="selectable"
       />
     </BaseIntersection>
   </div>
@@ -14,6 +13,7 @@
 <script>
 import CardItem from "@/components/item/CardItem.vue";
 export default {
+  name: "ItemList",
   props: {
     listItem: {
       type: Array,
@@ -26,6 +26,10 @@ export default {
     manageDialogTitle: {
       type: String,
       required: true
+    },
+    selectable: {
+      type: Boolean,
+      default: false
     }
   },
   components: {

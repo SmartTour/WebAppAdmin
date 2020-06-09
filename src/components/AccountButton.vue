@@ -32,6 +32,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
+  name: "AccountButton",
   methods: {
     logout() {
       this.$router.push({

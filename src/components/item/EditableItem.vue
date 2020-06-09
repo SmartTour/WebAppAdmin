@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  name: "EditableItem",
   props: {
     value: {
       type: String,

@@ -25,6 +25,7 @@
 
 <script>
 export default {
+  base: "BasePasswordInput",
   props: {
     value: {
       type: String

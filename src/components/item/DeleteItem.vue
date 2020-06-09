@@ -7,6 +7,7 @@
 <script>
 import ConfirmDialog from "@/components/dialog/ConfirmDialog.vue";
 export default {
+  name: "DeleteItem",
   components: {
     ConfirmDialog
   },

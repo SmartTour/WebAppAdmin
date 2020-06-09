@@ -66,6 +66,7 @@ import { mapState } from "vuex";
 import { urlWebApi } from "@/assets/config.json";
 import DetailMediaItem from "@/components/itemDetail/DetailMediaItem.vue";
 export default {
+  name: "CarouselDialog",
   inheritAttrs: false,
   components: {
     DetailMediaItem

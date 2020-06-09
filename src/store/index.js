@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import * as layoutState from "@/store/modules/layoutState";
 import * as tourState from "@/store/modules/tourState";
 import * as userState from "@/store/modules/userState";
+import * as selectableState from "@/store/modules/selectableState";
 
 Vue.use(Vuex);
 
@@ -11,7 +12,8 @@ export default new Vuex.Store({
   modules: {
     layoutState,
     tourState,
-    userState
+    userState,
+    selectableState
   },
   state: {},
   mutations: {},

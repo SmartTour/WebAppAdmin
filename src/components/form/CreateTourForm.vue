@@ -38,6 +38,7 @@
 <script>
 import { mapActions } from "vuex";
 export default {
+  name: "CreateTourForm",
   data() {
     return {
       title: "",
@@ -57,6 +58,7 @@ export default {
       let nameEntity = this.typeTour == "BaseTour" ? "baseTours" : "liveTours";
 
       this.addEntity({ nameEntity: nameEntity, entity: tour });
+      this.$emit("submit");
     },
 
     onReset() {

@@ -8,6 +8,7 @@
 import PublicLayout from "@/layout/PublicLayout.vue";
 import DefaultLayout from "@/layout/DefaultLayout.vue";
 import { mapState } from "vuex";
+
 export default {
   data() {
     return {

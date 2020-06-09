@@ -24,6 +24,7 @@ import PasswordEditableItem from "@/components/item/PasswordEditableItem.vue";
 import EditableItem from "@/components/item/EditableItem.vue";
 
 export default {
+  name: "SettingsPage",
   components: {
     PasswordEditableItem,
     EditableItem

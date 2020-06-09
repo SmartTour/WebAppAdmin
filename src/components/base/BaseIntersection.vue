@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  name: "BaseIntersection",
   inheritAttrs: false
 };
 </script>

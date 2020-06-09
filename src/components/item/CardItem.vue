@@ -7,55 +7,62 @@
         style="height: 300px;"
       />
       <q-card-section>
-        <div class="text-overline text-orange-9" v-if="typeItem">
-          {{ idItem }} {{ typeItem }}
+        <div v-if="typeItem">
+          <q-chip text-color="orange-9"> {{ item.id }} {{ typeItem }} </q-chip>
         </div>
-        <div class="text-h5 q-mt-sm q-mb-xs">{{ title }}</div>
-        <div
-          v-if="description != '' && description"
-          class="text-caption text-grey"
-        >
-          {{ description }}
+        <div v-if="item.type">
+          <q-chip text-color="orange-9"> {{ item.type }} </q-chip>
+        </div>
+        <div class="text-h5 q-mt-sm q-mb-xs">{{ item.title }}</div>
+        <div class="text-caption text-grey">
+          {{ item.description }}
         </div>
       </q-card-section>
 
       <q-card-actions align="right">
         <q-btn flat color="primary" label="MANAGE" @click="openDialog = true" />
       </q-card-actions>
+      <q-item-section avatar v-if="selectable" align="right">
+        <q-toggle :value="selected" @input="onSelected" color="accent" />
+        <!-- <q-checkbox v-model="check" :val="item.name" color="teal" /> -->
+      </q-item-section>
     </q-card>
     <ManageDialog
       v-model="openDialog"
       :title="manageDialogTitle"
       :typeItem="typeItem"
-      :idItem="idItem"
+      :idItem="item.id"
     />
   </div>
 </template>
 
 <script>
 import ManageDialog from "@/components/dialog/ManageDialog.vue";
+import { mapActions } from "vuex";
 
 export default {
+  name: "CardItem",
   components: {
     ManageDialog
   },
   data() {
     return {
-      openDialog: false
+      openDialog: false,
+      selected: false
     };
   },
+  created: function() {
+    this.selected = this.$store.getters["selectableState/isSelected"](
+      this.item
+    );
+  },
   props: {
-    idItem: {
-      type: Number,
+    item: {
+      type: Object,
       required: true
     },
-    title: {
-      type: String
-    },
+
     typeItem: {
-      type: String
-    },
-    description: {
       type: String
     },
     urlImage: {
@@ -65,6 +72,19 @@ export default {
     manageDialogTitle: {
       type: String,
       required: true
+    },
+    selectable: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    ...mapActions("selectableState", ["addSelected", "removeSelected"]),
+    onSelected(value) {
+      console.log(this.item);
+      if (value) this.addSelected(this.item);
+      else this.removeSelected(this.item);
+      this.selected = value;
     }
   }
 };

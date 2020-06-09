@@ -1,19 +1,5 @@
 <template>
-  <div>
-    <q-tabs
-      v-model="tab"
-      dense
-      class="text-grey"
-      active-color="primary"
-      indicator-color="primary"
-      align="justify"
-      narrow-indicator
-    >
-      <q-tab name="baseTour" label="Base" />
-      <q-tab name="liveTour" label="Live" />
-    </q-tabs>
-    <q-separator />
-
+  <div style="padding-top: 50px">
     <q-tab-panels v-model="this.tab" animated>
       <q-tab-panel name="baseTour">
         <ItemList
@@ -33,19 +19,27 @@
 
     <BaseFloatingActionButton @click="openDialog = true" />
     <BaseDialog v-model="openDialog" title="Crea un nuovo tuor">
-      <slot name="createForm"><CreateTourForm /></slot>
+      <slot name="createForm"
+        ><CreateTourForm @submit="openDialog = false"
+      /></slot>
     </BaseDialog>
+    <q-page-sticky position="top" expand>
+      <TabsItem :labelTabs="labelTabs" v-model="tab" />
+    </q-page-sticky>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
 import ItemList from "@/components/list/ItemList.vue";
 import CreateTourForm from "@/components/form/CreateTourForm.vue";
+import TabsItem from "@/components/toolbar/TabsItem.vue";
 
 export default {
+  name: "TourPage",
   components: {
     ItemList,
-    CreateTourForm
+    CreateTourForm,
+    TabsItem
   },
 
   created: function() {
@@ -57,7 +51,17 @@ export default {
   data() {
     return {
       tab: "baseTour",
-      openDialog: false
+      openDialog: false,
+      labelTabs: [
+        {
+          label: "Base",
+          name: "baseTour"
+        },
+        {
+          label: "Live",
+          name: "liveTour"
+        }
+      ]
     };
   },
   computed: {

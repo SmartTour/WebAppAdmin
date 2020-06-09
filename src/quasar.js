@@ -56,9 +56,13 @@ import {
   QCarouselControl,
   QCarouselSlide,
   QRadio,
-  QVideo
+  QVideo,
+  QChip,
+  QCheckbox,
+  QFooter,
+  QToggle,
+  Mutation
 } from "quasar";
-
 Vue.use(Quasar, {
   config: {
     ripple: {}
@@ -109,11 +113,16 @@ Vue.use(Quasar, {
     QCarouselControl,
     QCarouselSlide,
     QRadio,
-    QVideo
+    QVideo,
+    QChip,
+    QCheckbox,
+    QFooter,
+    QToggle
   },
   directives: {
     Ripple,
-    ClosePopup
+    ClosePopup,
+    Mutation
   },
   plugins: {
     Notify,
