@@ -1,7 +1,7 @@
 <template>
   <div>
-    <ZoneListDraggable :items="baseTourZones" />
-    {{ baseTourZones }}
+    <ZoneListDraggable :listItems="baseTourZones" @save="onSave" />
+
     <BaseFloatingActionButton @click="openAddDialog = true" />
     <AddDialog
       v-model="openAddDialog"
@@ -15,15 +15,13 @@
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
-// import ZoneListDraggable from "@/components/draggable/ZoneListDraggable.vue";
+import ZoneListDraggable from "@/components/draggable/ZoneListDraggable.vue";
 import AddDialog from "@/components/dialog/AddDialog.vue";
-// import ContentsPage from "@/views/mainViews/ContentsPage.vue";
 
 export default {
   name: "EditBaseTour",
   components: {
-    ZoneListDraggable: () =>
-      import("@/components/draggable/ZoneListDraggable.vue"),
+    ZoneListDraggable,
     AddDialog,
     ContentsPage: () => import("@/views/mainViews/ContentsPage.vue")
   },
@@ -59,7 +57,7 @@ export default {
   methods: {
     ...mapActions("tourState", ["addEntity", "deleteEntity", "updateEntity"]),
     onDoneSelectionContent(listContents) {
-      listContents.map(content => {
+      listContents.forEach(content => {
         let baseTourZone = {
           ContentID: content.id,
           BaseTourID: this.idItem
@@ -67,6 +65,14 @@ export default {
         this.addEntity({ nameEntity: "baseTourZones", entity: baseTourZone });
       });
       console.log(listContents);
+    },
+    onSave(listBaseTourZones) {
+      listBaseTourZones.forEach(baseTourZone => {
+        this.updateEntity({
+          nameEntity: "baseTourZones",
+          entity: baseTourZone
+        });
+      });
     }
   }
 };

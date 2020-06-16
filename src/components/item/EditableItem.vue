@@ -68,7 +68,7 @@ export default {
       return "Modifica " + this.label;
     },
     maxLength() {
-      if (this.typeInput == "textarea") return 500;
+      if (this.typeInput == "textarea" || this.typeInput == "url") return 500;
       return 20;
     }
   }

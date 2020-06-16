@@ -2,8 +2,16 @@
   <div>
     <q-card class="my-card">
       <q-item clickable v-ripple @click="onClick">
-        <q-img v-if="isImage" :src="isExternalMedia ? item.url : urlItem" />
-        <q-video v-if="isVideo" :src="isExternalMedia ? item.url : urlItem" />
+        <q-img
+          v-if="isImage"
+          :src="isExternalMedia ? item.url : urlItem"
+          style="height: 280px;width:600px"
+        />
+        <q-video
+          v-if="isVideo"
+          :src="isExternalMedia ? item.url : urlItem"
+          style="height: 280px;width:600px"
+        />
       </q-item>
       <q-item>
         <q-item-section align="center">

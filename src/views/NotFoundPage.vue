@@ -10,9 +10,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 #pageNotFound {
-  background-image: url("../assets/backgrounds/notFound.svg");
+  background-image: url("../assets/backgrounds/notFound.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
 }
 </style>

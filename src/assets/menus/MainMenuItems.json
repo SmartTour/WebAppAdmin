@@ -25,19 +25,9 @@
     "icon": "short_text"
   },
   {
-    "label": "Le mie mappe",
-    "namedRoute": "Maps",
-    "icon": "map"
-  },
-  {
     "label": "I miei media",
     "namedRoute": "Media",
     "icon": "cloud"
-  },
-  {
-    "label": "Community",
-    "namedRoute": "Community",
-    "icon": "comment"
   },
   {
     "label": "Settings",

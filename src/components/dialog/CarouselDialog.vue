@@ -16,15 +16,32 @@
         :key="index"
         :name="index"
       >
-        <q-img
-          v-if="isImage(item.type) == true"
-          :src="isExternalMedia ? item.url : urlImageInternal(item.name)"
-        />
-        <q-video
-          :ratio="16 / 9"
-          v-if="isVideo(item.type) == true"
-          :src="isExternalMedia ? item.url : urlImageInternal(item.name)"
-        />
+        <div v-if="fullscreen">
+          <q-img
+            v-if="isImage(item.type) == true"
+            :src="isExternalMedia ? item.url : urlImageInternal(item.name)"
+          />
+          <q-video
+            :ratio="16 / 9"
+            v-if="isVideo(item.type) == true"
+            :src="isExternalMedia ? item.url : urlImageInternal(item.name)"
+          />
+        </div>
+        <div v-else>
+          <q-img
+            v-if="isImage(item.type) == true"
+            :src="isExternalMedia ? item.url : urlImageInternal(item.name)"
+            style="height: 600px; width: 440px"
+            contain
+          />
+          <q-video
+            :ratio="16 / 9"
+            v-if="isVideo(item.type) == true"
+            :src="isExternalMedia ? item.url : urlImageInternal(item.name)"
+            style="height: 600px; width: 440px"
+            contain
+          />
+        </div>
       </q-carousel-slide>
 
       <template v-slot:control>

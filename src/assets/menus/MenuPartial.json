@@ -1,0 +1,48 @@
+[
+    {
+      "label": "My Agency",
+      "namedRoute": "Agency",
+      "icon": "home"
+    },
+    {
+      "label": "Tours",
+      "namedRoute": "Tour",
+      "icon": "explore"
+    },
+    {
+      "label": "Contenuti",
+      "namedRoute": "Contents",
+      "icon": "art_track"
+    },
+    {
+      "label": "Rilevatori",
+      "namedRoute": "DetectionContents",
+      "icon": "wifi_tethering"
+    },
+    {
+      "label": "Frasi",
+      "namedRoute": "Phrases",
+      "icon": "short_text"
+    },
+    {
+      "label": "Le mie mappe",
+      "namedRoute": "Maps",
+      "icon": "map"
+    },
+    {
+      "label": "I miei media",
+      "namedRoute": "Media",
+      "icon": "cloud"
+    },
+    {
+      "label": "Community",
+      "namedRoute": "Community",
+      "icon": "comment"
+    },
+    {
+      "label": "Settings",
+      "namedRoute": "Settings",
+      "icon": "settings"
+    }
+  ]
+  

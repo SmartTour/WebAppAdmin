@@ -8,11 +8,17 @@
         label="Titolo"
       />
       <EditableItem
-        v-if="entity.description"
+        v-if="entity.description != null"
         :value="entity.description"
         @input="onChangeDescription"
         label="Descrizione"
         typeInput="textarea"
+      />
+      <EditableItem
+        :value="entity.imageUrl"
+        @input="onChangeUrlImage"
+        label="Url Image"
+        typeInput="url"
       />
 
       <q-separator spaced />
@@ -42,6 +48,9 @@ export default {
     }
   },
   methods: {
+    onChangeUrlImage(value) {
+      this.$emit("change-entity", { nameField: "imageUrl", valueField: value });
+    },
     onChangeTitle(value) {
       this.$emit("change-entity", { nameField: "title", valueField: value });
     },

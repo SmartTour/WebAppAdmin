@@ -11,7 +11,7 @@
       class="bg-white"
       style="width: 700px; max-width: 80vw;"
     >
-      <q-header class="bg-accent">
+      <q-header class="bg-primary">
         <q-toolbar>
           <q-toolbar-title>{{ title }}</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />

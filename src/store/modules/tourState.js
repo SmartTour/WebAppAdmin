@@ -1,10 +1,12 @@
 import ApiService from "../../services/ApiService";
 import UserExperienceHelper from "../helpers/UserExperienceHelper.js";
+
 export const namespaced = true;
 export const state = {
   baseTours: [],
   baseTourZones: [],
   liveTours: [],
+  liveTourZones: [],
   contents: [],
   questions: [],
   phrases: [],

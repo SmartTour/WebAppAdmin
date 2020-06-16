@@ -1,3 +1,7 @@
 {
-    "urlWebApi":"http://localhost:57929/api"
+    "urlWebApi":"http://localhost/api",
+    
+    "urlLocal":"http://localhost:57929/api",
+    "urlTestLocal":"http://localhost/api",
+    "urlTest": "http://angelo-pc/api"
 }

@@ -1,6 +1,13 @@
 <template>
   <div>
-    ciao sono detection content
+    <div class="fixed-center">
+      <q-img
+        :src="require('@/assets/images/empty-list.png')"
+        :ratio="16 / 9"
+        style="height: 500px; width: 700px"
+      />
+    </div>
+    <BaseFloatingActionButton />
   </div>
 </template>
 

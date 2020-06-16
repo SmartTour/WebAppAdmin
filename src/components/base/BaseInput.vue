@@ -32,7 +32,7 @@ export default {
     },
     maxLength: {
       type: Number,
-      default: 20
+      default: 50
     },
     nameIcon: {
       type: String,

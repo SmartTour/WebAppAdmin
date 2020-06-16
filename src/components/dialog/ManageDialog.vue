@@ -8,7 +8,7 @@
     class="row no-wrap"
   >
     <q-layout view="Lhh lpR fff" container class="bg-white">
-      <q-header class="bg-accent">
+      <q-header class="bg-primary">
         <q-toolbar>
           <q-toolbar-title>{{ title }}</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />

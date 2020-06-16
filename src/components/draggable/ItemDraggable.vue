@@ -11,7 +11,7 @@
         </q-card-section>
         <q-card-section>
           <div class="text-overline text-orange-9">
-            {{ entity.id }} {{ entity.type }}
+            {{ entity.id }} {{ entity.type }} order:{{ item.order }}
           </div>
           <div class="text-h5 q-mt-sm q-mb-xs">{{ entity.title }}</div>
         </q-card-section>
@@ -25,24 +25,34 @@
             @click="openPreviewDialog = true"
             icon="visibility"
           />
-          <q-btn flat round color="red" icon="favorite" />
-          <q-btn flat round color="primary" icon="edit" />
+          <q-btn
+            flat
+            round
+            color="primary"
+            @click="openEditDialog = true"
+            icon="edit"
+          />
         </q-card-actions>
       </q-card-section>
     </q-card>
     <BaseLayoutDialog v-model="openPreviewDialog" title="Anteprima"
       ><PreviewItem :contentHtml="entity.contentHtml" align="center"
     /></BaseLayoutDialog>
+    <BaseLayoutDialog v-model="openEditDialog" title="Edit zone"
+      ><DetailZoneItem :zoneItem="item" />
+    </BaseLayoutDialog>
   </div>
 </template>
 
 <script>
 import PreviewItem from "@/components/item/PreviewItem.vue";
+import DetailZoneItem from "@/components/itemDetail/DetailZoneItem.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "ItemDraggable",
   components: {
-    PreviewItem
+    PreviewItem,
+    DetailZoneItem
   },
   props: {
     item: {
@@ -52,7 +62,8 @@ export default {
   },
   data() {
     return {
-      openPreviewDialog: false
+      openPreviewDialog: false,
+      openEditDialog: false
     };
   },
   created: function() {

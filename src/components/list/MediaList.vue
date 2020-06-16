@@ -1,20 +1,29 @@
 <template>
-  <div class="row items-start q-gutter-md">
-    <BaseIntersection v-for="(item, index) in listItem" :key="index">
-      <MediaItem
-        :item="item"
-        :index="index"
-        :isExternalMedia="isExternalMedia"
-        @click="onClickMediaItem"
-        :selectable="selectable"
+  <div>
+    <div v-if="listItem.length == 0" class="fixed-center">
+      <q-img
+        :src="require('@/assets/images/no-media.png')"
+        :ratio="16 / 9"
+        style="height: 500px; width: 700px"
       />
-    </BaseIntersection>
-    <CarouselDialog
-      ref="carousel"
-      v-model="openCarousel"
-      :listMedia="listItem"
-      :isExternalMedia="isExternalMedia"
-    />
+    </div>
+    <div v-else class="row items-start q-gutter-md">
+      <BaseIntersection v-for="(item, index) in listItem" :key="index">
+        <MediaItem
+          :item="item"
+          :index="index"
+          :isExternalMedia="isExternalMedia"
+          @click="onClickMediaItem"
+          :selectable="selectable"
+        />
+      </BaseIntersection>
+      <CarouselDialog
+        ref="carousel"
+        v-model="openCarousel"
+        :listMedia="listItem"
+        :isExternalMedia="isExternalMedia"
+      />
+    </div>
   </div>
 </template>
 <script>

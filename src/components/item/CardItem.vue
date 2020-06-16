@@ -2,7 +2,7 @@
   <div>
     <q-card class="my-card" flat bordered>
       <q-img
-        :src="require('@/assets/images/' + this.urlImage)"
+        :src="require('@/assets/images/' + this.imageTyped)"
         :ratio="16 / 9"
         style="height: 300px;"
       />
@@ -67,7 +67,7 @@ export default {
     },
     urlImage: {
       type: String,
-      default: "defaultImmagine.svg"
+      default: ""
     },
     manageDialogTitle: {
       type: String,
@@ -85,6 +85,11 @@ export default {
       if (value) this.addSelected(this.item);
       else this.removeSelected(this.item);
       this.selected = value;
+    }
+  },
+  computed: {
+    imageTyped() {
+      return this.typeItem + ".svg";
     }
   }
 };
