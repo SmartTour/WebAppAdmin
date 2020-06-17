@@ -21,7 +21,7 @@
         label="Tipo tour"
       />
 
-      <div>
+      <div align="right">
         <q-btn
           label="Reset"
           type="reset"
